@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------------------------
+git init -> inicializa pasta no git
+git add readme.txt -> adiciona arquivos no git
+git commit -m "primeiro commit" -> commit local 
+git remote add origin https://github.com/andrematos/primefaces-algaworks.git -> 
+sincroniza com o repositório criado no git apelidando o endereço para origin
+git push -u origin master -> envia todos os commits locais para o repositório sincronizado.
+---------------------------------------------------------------------------------------------
+
+---------------------------Aula - instalando e configurando o eclipse------------------------
+Windows -> Preferences
+pesquisar Validation
+-> Habilitar - Suspend all validators
+
+pesquisar enconding
+para General/Web/XML
+ -> alterar para UTF-8
+
+pesquisar spelling
+-> desabilitar Enable spell checking
+---------------------------------------------------------------------------------------------
