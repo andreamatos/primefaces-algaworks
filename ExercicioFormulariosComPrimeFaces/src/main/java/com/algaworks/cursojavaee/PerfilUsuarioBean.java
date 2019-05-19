@@ -24,6 +24,7 @@ public class PerfilUsuarioBean {
 	private Long valorContrato;
 	private Integer metodo;
 	private List<String> cidades = new ArrayList<>();
+	private List<Contratos> contratos = new ArrayList<>();
 
 	private MetodoDTO metodoDTO;
 	private static List<MetodoDTO> METODOS = new ArrayList<>();
@@ -39,7 +40,19 @@ public class PerfilUsuarioBean {
 		carregarCidades();
 		carregarMetodos();
 		carregarCursos();
+		carregarListaPagina();
 		inicializaPagamento();
+	}
+
+	public List <Contratos> carregarListaPagina() {
+		contratos.add(new Contratos("André", "10.10.2013", "Fundamentos Java e Orientação a Objetos")); 
+		contratos.add(new Contratos("Gabi", "23.10.2015", "Desenvolvimento Web com JSF2")); 
+		contratos.add(new Contratos("Alvaro", "14.10.2007", "Persistência de Dados com JPA 2 e Hibernate")); 
+		contratos.add(new Contratos("Augusto", "16.10.2004", "Gerenciamento Agil de Projetos com Scrum")); 
+		contratos.add(new Contratos("Alexandre", "14.02.2008", "Front End")); 
+		contratos.add(new Contratos("Ronaldo", "11.02.2008", "C#")); 
+		contratos.add(new Contratos("Marli", "14.02.1998", "Pascal")); 
+		return contratos;
 	}
 	
 	public List<String> carregarCidades(){
@@ -278,6 +291,14 @@ public class PerfilUsuarioBean {
 
 	public void setCursos(List<SelectItem> cursos) {
 		this.cursos = cursos;
+	}
+
+	public List<Contratos> getContratos() {
+		return contratos;
+	}
+
+	public void setContratos(List<Contratos> contratos) {
+		this.contratos = contratos;
 	}
 
 

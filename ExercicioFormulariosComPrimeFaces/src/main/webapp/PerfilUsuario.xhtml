@@ -47,85 +47,119 @@
 	<h:form id="frm">
 		<p:messages/>
 		
-		<p:panelGrid columns="2">
-			<p:outputLabel value="Razao Social" for="razaosocial"/>
-			<p:inputText id="razaosocial" require="true" value="#{perfilUsuarioBean.razaoSocial}" required="true"/>
-
-			<p:outputLabel value="Cnpj" for="cnpj"/>
-			<p:inputMask id="cnpj" require="true" value="#{perfilUsuarioBean.cnpj}" mask="99.999.999/9999-99"  required="true"/>
+		<h:form id="frm">
+			<p:tabView dynamic="true" cache="false">
+				<p:tab title="Dados principais" disabled="false">
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Razao Social" for="razaosocial"/>
+						<p:inputText id="razaosocial" require="true" value="#{perfilUsuarioBean.razaoSocial}" required="false"/>
 			
-			<p:outputLabel value="Cidade" for="cidade"/>
-			<p:autoComplete id="cidade" value="#{perfilUsuarioBean.cidade}"
-			completeMethod="#{perfilUsuarioBean.sugerirCidades}" forceSelection="true" minQueryLength="1" dropdown="false"  required="true" />
-
-			<p:outputLabel value="Modalidade"  for="modalidade"/>
-			<p:selectOneRadio id="modalidade" styleClass="sem-bordas" value="#{perfilUsuarioBean.modalidade}" required="true">
-				<f:selectItem itemLabel="EAD" itemValue="E" />
-				<f:selectItem itemLabel="Presencial" itemValue="P" />
-			</p:selectOneRadio>
-			
-			<p:outputLabel value="Data do contrato" for="dataContrato" />
-			<p:calendar id="dataContrato" value="#{perfilUsuarioBean.dataContrato}" 
-				pattern="dd/MM/yyyy" readonlyInput="true" navigator="false"
-				pages="1" mode="popup" maxdate="#{perfilUsuarioBean.dataContrato}"
-				locale="pt"   required="true" />
-			
-			<p:outputLabel value="Valor do Contrato" for="valorcontrato"/>
-			<p:inputText id="valorcontrato" value="#{perfilUsuarioBean.valorContrato}" />
-
-			<p:outputLabel value="Metodo de Pagamento" for="metodo"/>
-			
-			<p:selectOneMenu id="metodo" value="#{perfilUsuarioBean.metodoDTO}" 
-							 converter="metodo" 
-   							 var="i"  
-   							 required="true">
-				
-				<p:ajax listener="#{perfilUsuarioBean.verificarMetodo}" event="change" update="metodo,pagamento"/>
-				
-				<f:selectItems value="#{perfilUsuarioBean.metodos}" 
-							var="metodo" 
-							itemLabel="#{metodo.descricao}" 
-							itemValue="#{metodo}"/>
-				<p:column>
-					<h:outputText value="#{i.descricao}"/>
-				</p:column>
-			</p:selectOneMenu>
-
-			<p:outputLabel value="Formas de pagamento " for="pagamento"/>
-			
-			<p:selectOneMenu id="pagamento" value="#{perfilUsuarioBean.pagamentoDTO}" 
-							 converter="pagamento" 
-   							 var="i"  
-   							 required="true">
-				
-				<f:selectItems value="#{perfilUsuarioBean.pagamentos}" 
-							var="pagamento" 
-							itemLabel="#{pagamento.descricao}" 
-							itemValue="#{pagamento}"/>
-				<p:column>
-					<h:outputText value="#{i.descricao}"/>
-				</p:column>
-			</p:selectOneMenu>
-			
-
-			<p:outputLabel value="Cursos"/>
+						<p:outputLabel value="Cnpj" for="cnpj"/>
+						<p:inputMask id="cnpj" require="true" value="#{perfilUsuarioBean.cnpj}" mask="99.999.999/9999-99"  required="false"/>
 						
-			<p:selectManyCheckbox id="cursos" 
-								  value="#{perfilUsuarioBean.selecaoCursos}" 
-								  var="i"
-							      styleClass="sem-bordas"
-							      layout="pageDirection">
-
-				<f:selectItems value="#{perfilUsuarioBean.cursos}" 
-							var="curso" 
-							itemDescription="#{curso.codigo}"/>
-							
-				<p:column>
-					<h:outputText value="#{curso.codigo}"/>
-				</p:column>
-			</p:selectManyCheckbox>
+						<p:outputLabel value="Cidade" for="cidade"/>
+						<p:autoComplete id="cidade" value="#{perfilUsuarioBean.cidade}"
+						completeMethod="#{perfilUsuarioBean.sugerirCidades}" forceSelection="true" minQueryLength="1" dropdown="false"  required="false" />
 			
-		</p:panelGrid>
+						<p:outputLabel value="Modalidade"  for="modalidade"/>
+						<p:selectOneRadio id="modalidade" styleClass="sem-bordas" value="#{perfilUsuarioBean.modalidade}" required="false">
+							<f:selectItem itemLabel="EAD" itemValue="E" />
+							<f:selectItem itemLabel="Presencial" itemValue="P" />
+						</p:selectOneRadio>
+					</p:panelGrid>
+				</p:tab>
+				
+				<p:tab title="Contrato" disabled="false">
+					<p:panelGrid columns="2">
+					
+						<p:outputLabel value="Data do contrato" for="dataContrato" />
+						<p:calendar id="dataContrato" value="#{perfilUsuarioBean.dataContrato}" 
+							pattern="dd/MM/yyyy" readonlyInput="true" navigator="false"
+							pages="1" mode="popup" maxdate="#{perfilUsuarioBean.dataContrato}"
+							locale="pt"   required="false" />
+						
+						<p:outputLabel value="Valor do Contrato" for="valorcontrato"/>
+						<p:inputText id="valorcontrato" value="#{perfilUsuarioBean.valorContrato}" />
+			
+						<p:outputLabel value="Metodo de Pagamento" for="metodo"/>
+						
+						<p:selectOneMenu id="metodo" value="#{perfilUsuarioBean.metodoDTO}" 
+										 converter="metodo" 
+			   							 var="i"  
+			   							 required="false">
+							
+							<p:ajax listener="#{perfilUsuarioBean.verificarMetodo}" event="change" update="metodo,pagamento"/>
+							
+							<f:selectItems value="#{perfilUsuarioBean.metodos}" 
+										var="metodo" 
+										itemLabel="#{metodo.descricao}" 
+										itemValue="#{metodo}"/>
+							<p:column>
+								<h:outputText value="#{i.descricao}"/>
+							</p:column>
+						</p:selectOneMenu>
+			
+						<p:outputLabel value="Formas de pagamento " for="pagamento"/>
+						
+						<p:selectOneMenu id="pagamento" value="#{perfilUsuarioBean.pagamentoDTO}" 
+										 converter="pagamento" 
+			   							 var="i"  
+			   							 required="false">
+							
+							<f:selectItems value="#{perfilUsuarioBean.pagamentos}" 
+										var="pagamento" 
+										itemLabel="#{pagamento.descricao}" 
+										itemValue="#{pagamento}"/>
+							<p:column>
+								<h:outputText value="#{i.descricao}"/>
+							</p:column>
+						</p:selectOneMenu>
+						
+					</p:panelGrid>
+				</p:tab>
+				
+				<p:tab title="Cursos" disabled="false">
+					<p:panelGrid columns="2">
+						<p:selectManyCheckbox id="cursos" 
+											  value="#{perfilUsuarioBean.selecaoCursos}" 
+											  var="i"
+										      styleClass="sem-bordas"
+										      layout="pageDirection">
+			
+							<f:selectItems value="#{perfilUsuarioBean.cursos}" 
+										var="curso" 
+										itemDescription="#{curso.codigo}"/>
+										
+							<p:column>
+								<h:outputText value="#{curso.codigo}"/>
+							</p:column>
+						</p:selectManyCheckbox>
+					</p:panelGrid>
+				</p:tab>
+				
+				<p:tab title="Consulta" disabled="false">
+					<p:panelGrid columns="2" style="width: 100%; margin-top: 20px">
+						<p:dataTable value="#{perfilUsuarioBean.contratos}" var="contratos" rows="5" paginator="true" paginatorPosition="bottom" >
+							
+							<p:column headerText="Razão Social" style="text-align: center" width="90" sortBy="#{contratos.razaoSocial}">
+								<h:outputText value="#{contratos.razaoSocial}"/>
+							</p:column>
+			
+							<p:column headerText="Data do Contrato" style="text-align: center" width="90">
+								<h:outputText value="#{contratos.dataDoContrato}"/>
+							</p:column>				
+						
+							<p:column headerText="Cursos" style="text-align: center" width="90" sortBy="#{contratos.razaoSocial}">
+								<h:outputText value="#{contratos.cursos}"/>
+							</p:column>
+									
+						</p:dataTable>
+			
+					</p:panelGrid>
+				</p:tab>
+					
+			</p:tabView>
+		</h:form>
 		
 		<p:commandButton value="cadastrar" action="#{perfilUsuarioBean.cadastrar}" update="@form" />
 	</h:form>
