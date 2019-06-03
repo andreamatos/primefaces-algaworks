@@ -16,7 +16,7 @@
 			</p:toolbarGroup>
 
 			<p:toolbarGroup align="right">
-				<p:button value="Pesquisa"/>
+				<p:button value="Pesquisa" outcome="/usuarios/PesquisaUsuarios"/>
 			</p:toolbarGroup>
 		</p:toolbar>
 		
@@ -37,5 +37,31 @@
 						promptLabel="Informe uma senha" inline="true"/>
 
 		</p:panelGrid>
+		
+		<p:panelGrid columns="2" id="adicionarGrupo" styleClass="sem-bordas" style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+			<p:selectOneMenu id="profissao" value="#{perfilUsuarioBean.profissao}" required="true">
+				<f:selectItem itemLabel="Selecione" itemValue="0"/>	
+				<f:selectItem itemLabel="Administradores" itemValue="1"/>
+			</p:selectOneMenu>	
+			<p:button value="Adicionar Grupo"/>
+		</p:panelGrid>
+		
+		<p:dataTable id="pesquisaUsuario" value="#{pesquisarUsuariosBean.usuariosFiltrados}" var="usuario"
+			style="margin-top: 20px" emptyMessage="Nenhum usuario encontrado." rows="20" paginator="true"
+			paginatorAlwaysVisible="false" paginatorPosition="bottom">
+			<p:column headerText="Grupo" style="text-align: left; width:700px">
+				<h:outputText value="Auxiliares"/>
+			</p:column>
+			<p:column style="text-align:center; width: 10px">
+				<p:button icon="ui-icon-pencil" title="Editar"/>
+				<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="confirmacaoExclusao.show()"/>
+			</p:column>		
+		</p:dataTable>
+		
+		<p:confirmDialog header="Exclusão de Usuario" message="Tem certeza que deseja excluir o cliente" 
+			widgetVar="confirmacaoExclusao">
+			<p:button value="Não" onclick="confirmacaoExclusao.hide(); return false;"/>
+			<p:commandButton value="Sim" oncomplete="confirmacaoExclusao.hide()"/>
+		</p:confirmDialog>
 	</ui:define>
 </ui:composition>
