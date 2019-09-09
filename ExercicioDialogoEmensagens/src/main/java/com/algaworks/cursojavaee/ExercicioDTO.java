@@ -1,10 +1,13 @@
 package com.algaworks.cursojavaee;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExercicioDTO {
+public class ExercicioDTO implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	public int index;
 	public String nome;
 	public Integer telefone;
@@ -52,6 +55,10 @@ public class ExercicioDTO {
 
 	public void setExercicioDTOLista(List<ExercicioDTO> exercicioDTOLista) {
 		this.exercicioDTOLista = exercicioDTOLista;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

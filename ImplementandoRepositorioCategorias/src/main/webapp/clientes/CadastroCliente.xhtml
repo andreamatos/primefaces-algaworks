@@ -1,0 +1,109 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Novo Cliente</ui:define>
+	
+	<ui:define name="corpo">
+		<h:form>
+			<h1>Novo Cliente</h1>
+				
+	    	<p:messages autoUpdate="true" />
+	
+	    	<ui:include src="/WEB-INF/template/pedidos/BotoesCliente.xhtml" />
+			
+			<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+				<p:outputLabel value="Nome" for="nome"/>
+				<p:inputText id="nome" size="75" maxlength="75" value="#{cadastroClienteBean.cliente.nome}"/>
+	
+				<p:outputLabel value="Tipo"  for="tipo"/>
+				<p:selectOneRadio id="tipo" value="#{cadastroClienteBean.cliente.tipo}">
+					<f:selectItem itemLabel="Física" itemValue="fisica"/>
+					<f:selectItem itemLabel="Jurídica" itemValue="juridica" />
+				</p:selectOneRadio>
+	
+				<p:outputLabel value="CNPJ" for="cnpj"/>
+				<p:inputText id="cnpj" size="30" maxlength="30" value="#{cadastroClienteBean.cliente.documentoReceitaFederal}"/>
+	
+				<p:outputLabel value="E-mail" for="email" />
+				<p:inputText id="email" size="60" maxlength="60" value="#{cadastroClienteBean.cliente.email}"/>
+			</p:panelGrid>
+	
+			<p:panelGrid columns="1" id="adicionarEndereco" styleClass="sem-bordas" style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+				<p:button value="Adicionar Endereço" onclick="inclusaoClienteDialog.show(); return false;"/>
+			</p:panelGrid>
+	
+			<p:dataTable id="cadastroCliente" value="#{pesquisarClientesBean.clientesFiltrados}" var="cliente"
+				style="margin-top: 20px" emptyMessage="Nenhum cliente encontrado." rows="20" paginator="true"
+				paginatorAlwaysVisible="false" paginatorPosition="bottom">
+				<p:column headerText="Logradouro" style="text-align: left; width:100px">
+					<h:outputText value="Rua das Pedras Grandes Azuis"/>
+				</p:column>
+				<p:column headerText="Número" style="text-align: left; width:50px">
+					<h:outputText value="1234"/>
+				</p:column>
+				<p:column headerText="Complemento" style="text-align: left; width:30px">
+					<h:outputText value="Ap 1022"/>
+				</p:column>
+				<p:column headerText="CEP" style="text-align: center; width:30px">
+					<h:outputText value="38499-533"/>
+				</p:column>
+				<p:column headerText="Cidade/UF" style="text-align: left; width:100px">
+					<h:outputText value="Uberlândia/MG"/>
+				</p:column>
+				<p:column style="text-align:center; width: 10px">
+					<p:button icon="ui-icon-pencil" title="Editar"/>
+					<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="confirmacaoExclusao.show()"/>
+				</p:column>
+			</p:dataTable>
+			
+			<p:dialog header="Inclusão de Produto" widgetVar="inclusaoClienteDialog" modal="true" resizable="false">
+				<h:panelGroup id="inclusaoPanel">
+					<p:messages/>
+					<h:panelGroup>
+						<h:panelGrid columns="2">
+							<p:outputLabel value="Logradouro"/>
+							<p:inputText id="logradouro" style="width: 250px"/>
+							
+							<p:outputLabel value="Número"/>
+							<p:inputText id="numero" style="width: 50px"/>
+							
+							<p:outputLabel value="Complemento"/>
+							<p:inputText id="complemento"/>
+	
+							<p:outputLabel value="CEP" />
+							<p:inputText id="cep" style="width: 70px"/>
+	
+						</h:panelGrid>
+					</h:panelGroup>
+					
+					<h:panelGroup>
+						<h:panelGrid columns="4">	
+							<p:outputLabel value="Cidade"/>
+							<p:inputText id="cidade" style="width: 150px; margin-left: 40px; margin-rigth: 40px"/>
+						
+							<p:outputLabel value="UF" />
+							<p:inputText id="uf" style="width: 10px;"/>
+		
+							<p:spacer/>		
+							<p:commandButton  style="width: 80px; margin-left: 40px; margin-rigth: 40px" value="Incluir" action="#{cadastroClienteBean.incluirCliente}" update="cadastroCliente"
+							oncomplete="cadastroClienteBean.hide()"/>
+						</h:panelGrid>
+					</h:panelGroup>
+					
+				</h:panelGroup>
+			</p:dialog>
+			
+			<p:confirmDialog header="Exclusão de cliente" message="Tem certeza que deseja excluir o cliente?" 
+				widgetVar="confirmacaoExclusao">
+				<p:button value="Não" onclick="confirmacaoExclusao.hide(); return false;"/>
+				<p:commandButton value="Sim" oncomplete="confirmacaoExclusao.hide()"/>
+			</p:confirmDialog>
+			
+		</h:form>
+	
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,57 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Pesquisa Pedidos</ui:define>
+	
+	<ui:define name="corpo">
+		<h:form>
+			<h1>Pesquisa de Clientes</h1>
+			
+			<p:toolbar style="margin-top: 20px"> 
+				<p:toolbarGroup>
+					<p:commandButton value="Pesquisar" id="pesquisar"/>				
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Novo" outcome="/clientes/CadastroCliente"/>
+				</p:toolbarGroup>
+			</p:toolbar>
+			
+			<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+				<p:outputLabel value="CPF/CNPJ"/>
+				<p:inputText size="40" maxlength="30"/>
+
+				<p:outputLabel value="Nome"/>
+				<p:inputText size="100" maxlength="100"/>
+			</p:panelGrid>
+			
+			<p:dataTable id="pedidosClientes" value="#{pesquisarClientesBean.clientesFiltrados}" var="pedido"
+				style="margin-top: 20px" emptyMessage="Nenhum pedido encontrado." rows="20" paginator="true"
+				paginatorAlwaysVisible="false" paginatorPosition="bottom">
+				<p:column headerText="Nome" style="text-align: center; width:100px">
+					<h:outputText value="Supermercado João das Couves Ltda"/>
+				</p:column>
+				<p:column headerText="Tipo">
+					<h:outputText value="Jurídica"/>
+				</p:column>
+				<p:column headerText="CPF/CNPJ">
+					<h:outputText value="02.493.738/0001-83"/>
+				</p:column>
+				<p:column style="text-align:center; width: 100px">
+					<p:button icon="ui-icon-pencil" title="Editar"/>
+					<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="confirmacaoExclusao.show()"/>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog header="Exclusão de cliente" message="Tem certeza que deseja excluir o cliente?" 
+				widgetVar="confirmacaoExclusao">
+				<p:button value="Não" onclick="confirmacaoExclusao.hide(); return false;"/>
+				<p:commandButton value="Sim" oncomplete="confirmacaoExclusao.hide()"/>
+			</p:confirmDialog>
+			
+		</h:form>
+	</ui:define>
+</ui:composition>

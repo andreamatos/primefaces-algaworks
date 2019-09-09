@@ -1,15 +1,24 @@
 package com.algaworks.cursojavaee;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import java.io.Serializable;
 
-@ManagedBean(name="exercicioBean")
+import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+@Named
 @ViewScoped
-public class ExercicioBean {
-	private ExercicioDTO exercicioDTO = new ExercicioDTO();
+public class ExercicioBean implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private ExercicioDTO exercicioDTO;
+	
 	private String itemSelecionado;
 	private int index = 0;
 	
+
 	public void excluirCadastro() {
 		exercicioDTO.exercicioDTOLista.remove(index);
 	}
@@ -42,4 +51,9 @@ public class ExercicioBean {
 	public void setIndex(int index) {
 		this.index = index;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 }

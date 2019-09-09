@@ -19,3 +19,36 @@ para General/Web/XML
 pesquisar spelling
 -> desabilitar Enable spell checking
 ---------------------------------------------------------------------------------------------
+
+comando ajaxStatus eh um comando global da classe, eh carregado para todas as requisições, no caso abaixo quando é startado uma requisição ativa a imagem, quando complete, ou seja retorna e finaliza a requizição é informado o value null, ou seja nada.
+
+é possivel anular este comando incluindo o comando global=false
+
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<h:graphicImage library="imagens" name="carregando.gif"/>
+			</f:facet>
+			
+			<f:facet name="complete">
+				<h:outputText value=""/>
+			</f:facet>
+		</p:ajaxStatus>
+
+---------------------------------------------------------------------------------------------
+<p:password id="senha" required="true" value="#{perfilUsuarioBean.senha}" feedback="true"/> - o comando feedback
+traz uma label no campo escrita please enter a password mostrando se a sua password é fraca, média ou forte conforme for digitando no input. 
+comandos para alterar a label;
+weakLabel="Fraca" goodLabel="Boa" strongLabel="Forte" promptLabel="informe uma senha" inline="true" mach="confirmacaoSenha"-> este comando incluí as labels na mesma linha do input.
+
+----------- o comando mach verifica o campo confirmacao de senha sem precisar colocar uma action para isso.
+<p:outputLabel value="Senha" for="senha"/>
+<p:password id="senha" required="true" value="#{perfilUsuarioBean.senha}"
+feedback="true" weakLabel="Fraca" goodLabel="Boa" strongLabel="Forte" promptLabel="Informe uma senha" inline="true"
+match="confirmacaoSenha"/>
+
+<p:outputLabel value="Confirme a senha" for="confirmacaoSenha">
+<p:password id="confirmacaoSenha" required="true"/>
+-----------
+estudar sobre conversores jsf
+https://blog.algaworks.com/conversores-jsf/
+-----------
