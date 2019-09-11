@@ -16,7 +16,7 @@ public class Grupo implements Serializable{
 	private Long id;
 	private String nome;
 	private String descricao;
-	
+
 	@Id
 	@GeneratedValue
 	public Long getId() {

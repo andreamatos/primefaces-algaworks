@@ -10,6 +10,7 @@ import javax.inject.Named;
 import com.algaworks.pedidovenda.filter.ProdutoFilter;
 import com.algaworks.pedidovenda.model.Produto;
 import com.algaworks.pedidovenda.repository.Produtos;
+import com.algaworks.pedidovenda.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
@@ -21,7 +22,16 @@ public class PesquisaProdutosBean implements Serializable {
 	private Produtos produtos;
 	private ProdutoFilter filtro;
 	private List<Produto> produtosFiltrados;
-
+	private Produto produtoSelecionado;
+	
+	
+	public void excluir() {
+		produtos.remover(produtoSelecionado);
+		produtosFiltrados.remove(produtoSelecionado);		
+		FacesUtil.addInfoMessage("Produto " + produtoSelecionado.getSku() 
+			+ " excluído com sucesso.");
+	}
+	
 	public PesquisaProdutosBean() {
 		this.filtro = new ProdutoFilter();
 	}
@@ -44,6 +54,14 @@ public class PesquisaProdutosBean implements Serializable {
 
 	public void setFiltro(ProdutoFilter filtro) {
 		this.filtro = filtro;
+	}
+
+	public Produto getProdutoSelecionado() {
+		return produtoSelecionado;
+	}
+
+	public void setProdutoSelecionado(Produto produtoSelecionado) {
+		this.produtoSelecionado = produtoSelecionado;
 	}
 
 }

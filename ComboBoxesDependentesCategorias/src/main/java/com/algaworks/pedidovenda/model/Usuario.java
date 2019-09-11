@@ -27,7 +27,6 @@ public class Usuario implements Serializable{
 	private String nome;
 	private String senha;
 	private String email;
-	private String profissao;
 	private List<Grupo> grupos = new ArrayList<>();
 
 	@Id
@@ -106,14 +105,4 @@ public class Usuario implements Serializable{
 		return true;
 	}
 
-	@NotBlank
-	@Column(nullable=false, length=50)
-	public String getProfissao() {
-		return profissao;
-	}
-
-	
-	public void setProfissao(String profissao) {
-		this.profissao = profissao;
-	}
 }
