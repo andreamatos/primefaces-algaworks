@@ -46,7 +46,13 @@ public class CadastroUsuarioBean implements Serializable{
 	
 	public void salvar() {
 		cadastroUsuarioService.salvar(usuario);
+		limpar();
 		FacesUtil.addInfoMessage("Usuário salvo com sucesso!");
+	}
+	
+	public void limpar(){
+		usuario = new Usuario();
+		grupo = new Grupo();
 	}
 	
 	public void adicionarGrupo() {

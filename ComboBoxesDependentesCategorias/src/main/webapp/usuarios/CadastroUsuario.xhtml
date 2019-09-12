@@ -56,16 +56,24 @@
 			</p:panelGrid>
 
 			
-			<p:dataTable id="grupoTabela" value="#{pesquisarUsuariosBean.usuariosFiltrados}" var="usuario"
-				style="margin-top: 20px" emptyMessage="Nenhum usuario encontrado." rows="20" paginator="true"
-				paginatorAlwaysVisible="false" paginatorPosition="bottom">
+			<p:dataTable id="grupoTabela" value="#{cadastroUsuarioBean.usuario.grupos}" 
+				rows="20" 
+				var="usuario" 
+				paginator="true"
+				style="margin-top: 20px" 
+				paginatorPosition="bottom"
+				paginatorAlwaysVisible="false" 
+				emptyMessage="Nenhum usuario encontrado.">
+				
 				<p:column headerText="Grupo" style="text-align: left; width:700px">
-					<h:outputText value="Auxiliares"/>
+					<h:outputText value="#{usuario.nome}"/>
 				</p:column>
+				
 				<p:column style="text-align:center; width: 10px">
 					<p:button icon="ui-icon-pencil" title="Editar"/>
 					<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="confirmacaoExclusao.show()"/>
 				</p:column>		
+			
 			</p:dataTable>
 			
 			<p:confirmDialog header="Exclusão de Usuario" message="Tem certeza que deseja excluir o cliente" 
