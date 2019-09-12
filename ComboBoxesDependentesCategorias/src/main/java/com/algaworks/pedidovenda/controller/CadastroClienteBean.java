@@ -47,4 +47,9 @@ public class CadastroClienteBean implements Serializable{
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	
+	public boolean isEditando() {
+		return this.cliente.getId() != null;
+	}
+	
 }

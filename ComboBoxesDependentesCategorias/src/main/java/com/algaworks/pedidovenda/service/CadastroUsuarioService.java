@@ -27,6 +27,7 @@ public class CadastroUsuarioService implements Serializable{
 		}
 		
 		return usuarios.guardar(usuario);
-		
+
 	}
+
 }

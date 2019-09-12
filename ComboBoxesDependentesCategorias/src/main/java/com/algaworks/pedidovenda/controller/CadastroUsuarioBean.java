@@ -11,7 +11,6 @@ import javax.inject.Named;
 import com.algaworks.pedidovenda.model.Grupo;
 import com.algaworks.pedidovenda.model.Usuario;
 import com.algaworks.pedidovenda.repository.Grupos;
-import com.algaworks.pedidovenda.service.CadastroGrupoService;
 import com.algaworks.pedidovenda.service.CadastroUsuarioService;
 import com.algaworks.pedidovenda.util.jsf.FacesUtil;
 
@@ -21,12 +20,12 @@ public class CadastroUsuarioBean implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	@Inject
 	private Usuario usuario;
 	@Inject
 	private Grupos grupos;
 	@Inject
 	private CadastroUsuarioService cadastroUsuarioService;
+	
 	
 	private Grupo grupo;
 	
@@ -49,7 +48,7 @@ public class CadastroUsuarioBean implements Serializable{
 		limpar();
 		FacesUtil.addInfoMessage("Usuário salvo com sucesso!");
 	}
-	
+
 	public void limpar(){
 		usuario = new Usuario();
 		grupo = new Grupo();
@@ -57,6 +56,10 @@ public class CadastroUsuarioBean implements Serializable{
 	
 	public void adicionarGrupo() {
 		this.usuario.getGrupos().add(this.grupo);
+	}
+
+	public void excluir() {
+		this.usuario.getGrupos().remove(this.grupo);
 	}
 
 	public Usuario getUsuario() {
@@ -82,4 +85,9 @@ public class CadastroUsuarioBean implements Serializable{
 	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
 	}
+	
+	public boolean isEditando() {
+		return this.usuario.getId() != null;
+	}
+
 }

@@ -1,14 +1,24 @@
 package com.algaworks.pedidovenda.repository;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 
-import com.algaworks.pedidovenda.model.Produto;
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
+import com.algaworks.pedidovenda.filter.UsuarioFilter;
 import com.algaworks.pedidovenda.model.Usuario;
+import com.algaworks.pedidovenda.service.NegocioException;
+import com.algaworks.pedidovenda.util.jpa.Transactional;
 
 public class Usuarios implements Serializable{
 
@@ -16,6 +26,9 @@ public class Usuarios implements Serializable{
 
 	@Inject
 	private EntityManager manager;
+	
+	@Inject
+	private Usuario usuario;
 
 	public Usuario porNome(String nome){
 		try {
@@ -39,42 +52,37 @@ public class Usuarios implements Serializable{
 		return manager.find(Usuario.class, id);
 	}
 
-//	public Produto porSku(String sku) {
-//		try {
-//			return manager.createQuery("from Produto where upper(sku) = :sku", Produto.class)
-//					.setParameter("sku", sku.toUpperCase())
-//					.getSingleResult();
-//		}catch(NoResultException e) {
-//			return null;
-//		}
-//	}
-//	
-//	@Transactional
-//	public void remover(Produto produto) {
-//		try {
-//			produto = porId(produto.getId());
-//			manager.remove(produto);
-//			manager.flush();
-//		}catch(PersistenceException e) {
-//			throw new NegocioException("Produto não pode ser excluído.");
-//		}
-//	}
-//	@SuppressWarnings("unchecked")
-//	public List<Produto> filtrados(ProdutoFilter filtro){
-//		Session session = manager.unwrap(Session.class);
-//		Criteria criteria = session.createCriteria(Produto.class);
-//
-//		if(StringUtils.isNotBlank(filtro.getSku())) {
-//			criteria.add(Restrictions.eq("sku", filtro.getSku()));
-//		}
-//		
-//		//where nome like '%joao%' -> usar MatchMode .ANYWHERE
-//		if(StringUtils.isNotBlank(filtro.getNome())) {
-//			criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
-//		}
-//
-//		return criteria.addOrder(Order.asc("nome")).list();
-//	}
-//
+	@SuppressWarnings("unchecked")
+	public List<Usuario> filtrar(UsuarioFilter filtro) {
+		Session session = manager.unwrap(Session.class);
+		Criteria criteria = session.createCriteria(Usuario.class);
+
+		//ex: where nome like '%joao%' -> usar MatchMode .ANYWHERE
+		if(StringUtils.isNotBlank(filtro.getNome())) {
+			criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
+		}
+		
+		return criteria.addOrder(Order.asc("nome")).list();
+	}
+
+	@Transactional
+	public void remover(Usuario usuarioSelecionado) {
+		try {
+			usuario = porId(usuarioSelecionado.getId());
+			manager.remove(usuario);
+			manager.flush();
+		}catch(PersistenceException e) {
+			System.out.println("Erro: " + e);
+			throw new NegocioException("Usuário não pode ser excluído.");
+		}
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 }

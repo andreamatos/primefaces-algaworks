@@ -3,28 +3,29 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:o="http://omnifaces.org/ui">
 
-	<ui:define name="titulo">Novo Usuário</ui:define>
+	<ui:define name="titulo">Nome Usuário</ui:define>
 	
 	<ui:define name="corpo">
     	<f:metadata>
+	    	<o:viewParam name="usuario" value="#{cadastroUsuarioBean.usuario}"/>
     		<f:event listener="#{cadastroUsuarioBean.inicializar}" type="preRenderView"/>	
     	</f:metadata>
     	
 		<h:form id="frm">
-	    	<h1>Novo Usuário</h1>
+	    	<h1>Nome Usuário</h1>
 	    	
 	    	<p:messages autoUpdate="true" closable="true"/>
 	    	
 	    	<p:toolbar style="margin-top: 20px">
 	    		<p:toolbarGroup>
 	    			<p:button value="Novo" outcome="/usuarios/CadastroUsuario" />
-	    			<p:commandButton value="Salvar" id="botaoSalvar"
-	    				action="#{cadastroUsuarioBean.salvar}" update="@form"/>
+	    			<p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroUsuarioBean.salvar}" update="@form"/>
 	    		</p:toolbarGroup>
 	    		<p:toolbarGroup align="right">
-	    			<p:button value="Pesquisa" outcome="/usuarios/CadastroUsuario" />
+	    			<p:button value="Pesquisar" outcome="/usuarios/PesquisaUsuarios" />
 	    		</p:toolbarGroup>
 	    	</p:toolbar>
 	    	
@@ -52,7 +53,7 @@
 						itemLabel="#{grupo.descricao}" />
 				</p:selectOneMenu>
 				
-				<p:commandButton value="Adcionar grupo" action="#{cadastroUsuarioBean.adicionarGrupo}" process="painelGrupo" update="grupoTabela"/>
+				<p:commandButton value="Adcionar grupo" action="#{cadastroUsuarioBean.adicionarGrupo}" process="frm:painelGrupo" update="frm:grupoTabela"/>
 			</p:panelGrid>
 
 			
@@ -70,16 +71,14 @@
 				</p:column>
 				
 				<p:column style="text-align:center; width: 10px">
-					<p:button icon="ui-icon-pencil" title="Editar"/>
 					<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="confirmacaoExclusao.show()"/>
 				</p:column>		
-			
 			</p:dataTable>
 			
 			<p:confirmDialog header="Exclusão de Usuario" message="Tem certeza que deseja excluir o cliente" 
 				widgetVar="confirmacaoExclusao">
 				<p:button value="Não" onclick="confirmacaoExclusao.hide(); return false;"/>
-				<p:commandButton value="Sim" oncomplete="confirmacaoExclusao.hide()"/>
+				<p:commandButton value="Sim" oncomplete="confirmacaoExclusao.hide()" action="#{cadastroUsuarioBean.excluir}" process="frm" update="frm:grupoTabela"/>
 			</p:confirmDialog>
 		</h:form>
 	</ui:define>
